@@ -1,0 +1,1609 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>城市电动自行车停放问题治理调研报告</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"></script>
+    <script>
+        // Tailwind配置
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#1e40af',    // 深蓝主色（专业感）
+                        secondary: '#3b82f6',  // 中蓝辅助色
+                        accent: '#93c5fd',     // 浅蓝强调色
+                        neutral: '#f3f4f6',    // 浅灰背景
+                        dark: '#1f2937',       // 深色文本
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .text-shadow {
+                text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+            .bg-blur {
+                backdrop-filter: blur(8px);
+            }
+            .scrollbar-hide::-webkit-scrollbar {
+                display: none;
+            }
+            .scrollbar-hide {
+                -ms-overflow-style: none;
+                scrollbar-width: none;
+            }
+        }
+    </style>
+</head>
+<body class="bg-neutral text-dark font-sans">
+    <!-- 顶部导航栏 - 固定定位 -->
+    <header class="fixed top-0 left-0 right-0 bg-white/90 bg-blur shadow-md z-50 transition-all duration-300" id="navbar">
+        <div class="container mx-auto px-4 py-3 flex items-center justify-between">
+            <h1 class="text-xl md:text-2xl font-bold text-primary flex items-center">
+                <i class="fa fa-file-text-o mr-2"></i>
+                <span class="hidden sm:inline">电动自行车治理调研</span>
+            </h1>
+            
+            <!-- 移动端菜单按钮 -->
+            <button id="menuToggle" class="md:hidden text-primary focus:outline-none">
+                <i class="fa fa-bars text-xl"></i>
+            </button>
+            
+            <!-- 桌面端导航菜单 -->
+            <nav class="hidden md:flex space-x-6">
+                <a href="#intro" class="text-dark hover:text-primary transition-colors duration-200">引言</a>
+                <a href="#method" class="text-dark hover:text-primary transition-colors duration-200">研究方法</a>
+                <a href="#current" class="text-dark hover:text-primary transition-colors duration-200">现状分析</a>
+                <a href="#reason" class="text-dark hover:text-primary transition-colors duration-200">原因分析</a>
+                <a href="#solution" class="text-dark hover:text-primary transition-colors duration-200">解决方案</a>
+                <a href="#responsibility" class="text-dark hover:text-primary transition-colors duration-200">责任路径</a>
+            </nav>
+        </div>
+        
+        <!-- 移动端导航菜单 -->
+        <div id="mobileMenu" class="hidden md:hidden bg-white shadow-lg absolute w-full">
+            <div class="container mx-auto px-4 py-2 flex flex-col space-y-3">
+                <a href="#intro" class="py-2 text-dark hover:text-primary transition-colors duration-200">引言</a>
+                <a href="#method" class="py-2 text-dark hover:text-primary transition-colors duration-200">研究方法</a>
+                <a href="#current" class="py-2 text-dark hover:text-primary transition-colors duration-200">现状分析</a>
+                <a href="#reason" class="py-2 text-dark hover:text-primary transition-colors duration-200">原因分析</a>
+                <a href="#solution" class="py-2 text-dark hover:text-primary transition-colors duration-200">解决方案</a>
+                <a href="#responsibility" class="py-2 text-dark hover:text-primary transition-colors duration-200">责任路径</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- 主内容区 -->
+    <main class="container mx-auto px-4 pt-24 pb-16">
+        <!-- 报告标题区域 -->
+        <section class="mb-12 text-center">
+            <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold text-primary mb-4 text-shadow">城市电动自行车停放问题治理调研报告</h1>
+            <div class="w-24 h-1 bg-secondary mx-auto mb-6 rounded-full"></div>
+            <p class="text-gray-600 max-w-3xl mx-auto">基于广州市荔湾区及全国多个城市的实地调研，深入剖析电动自行车停放问题，为城市治理提供科学建议</p>
+        </section>
+
+        <!-- 一、引言 -->
+        <section id="intro" class="mb-16 scroll-mt-24">
+            <div class="bg-white rounded-xl shadow-lg p-6 md:p-8 transition-transform duration-300 hover:shadow-xl">
+                <div class="flex items-center mb-6">
+                    <div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-white mr-4">
+                        <i class="fa fa-info"></i>
+                    </div>
+                    <h2 class="text-2xl md:text-3xl font-bold text-primary">一、引言</h2>
+                </div>
+                
+                <div class="prose max-w-none">
+                    <p class="mb-4">随着城市化进程加速和居民生活节奏加快，电动自行车凭借其便捷、经济、灵活的特点，已成为我国城市居民短途出行的主要交通工具。据统计，全国电动自行车保有量已超过3.8亿辆，仅2025年上半年，全国共发生电动自行车火灾7048起，虽同比下降44.7%，但安全形势依然严峻。</p>
+                    
+                    <p class="mb-4">在广州荔湾区等城市中心区域，电动自行车与人口密度呈现高度集中态势，如荔湾区人口密度达20953人/平方公里，远超全市平均水平2512人/平方公里，使得"人-车-道路资源"矛盾尤为突出。</p>
+                    
+                    <div class="my-8 bg-blue-50 p-6 rounded-lg border-l-4 border-primary">
+                        <h4 class="font-bold text-lg mb-2 text-primary">电动自行车停放主要问题</h4>
+                        <ul class="list-disc pl-5 space-y-2">
+                            <li>占用消防通道、人行道和非机动车道</li>
+                            <li>私拉电线充电，存在严重安全隐患</li>
+                            <li>违规在楼道、电梯间停放</li>
+                            <li>影响城市市容市貌和交通秩序</li>
+                        </ul>
+                    </div>
+                    
+                    <p>本调研报告基于对广州市荔湾区及全国多个城市的实地调研和问卷数据分析，深入剖析电动自行车停放问题的现状、成因及影响，旨在为政府部门、社区管理方提供科学、可行的治理建议，推动城市电动自行车停放管理的规范化、精细化和智能化。</p>
+                </div>
+                
+                <!-- 数据可视化：电动自行车安全数据 -->
+                <div class="mt-8">
+                    <h3 class="text-xl font-semibold mb-4 text-dark">电动自行车安全数据统计</h3>
+                    <div class="h-64 md:h-72">
+                        <canvas id="safetyChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 二、研究方法 -->
+        <section id="method" class="mb-16 scroll-mt-24">
+            <div class="bg-white rounded-xl shadow-lg p-6 md:p-8 transition-transform duration-300 hover:shadow-xl">
+                <div class="flex items-center mb-6">
+                    <div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-white mr-4">
+                        <i class="fa fa-search"></i>
+                    </div>
+                    <h2 class="text-2xl md:text-3xl font-bold text-primary">二、研究方法</h2>
+                </div>
+                
+                <!-- 研究方法选项卡 -->
+                <div class="mb-8">
+                    <div class="flex flex-wrap border-b border-gray-200">
+                        <button class="method-tab active px-4 py-2 font-medium text-primary border-b-2 border-primary" data-target="scope">调研范围与对象</button>
+                        <button class="method-tab px-4 py-2 font-medium text-gray-500 hover:text-primary" data-target="collection">数据收集方法</button>
+                        <button class="method-tab px-4 py-2 font-medium text-gray-500 hover:text-primary" data-target="analysis">数据分析方法</button>
+                    </div>
+                    
+                    <!-- 选项卡内容 -->
+                    <div class="method-content active p-4" id="scope">
+                        <h3 class="text-xl font-semibold mb-4 text-dark">2.1 调研范围与对象</h3>
+                        <p class="mb-4">本研究主要采用"双案例地"调研设计，以广州市荔湾区作为核心调研区域，同时选取北京、上海、深圳等一线城市作为对比研究对象。荔湾区作为广州市中心城区，电动自行车保有量大、停放问题突出，具有典型代表性。</p>
+                        
+                        <h4 class="font-bold text-lg mb-2">调研对象包括：</h4>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                            <div class="bg-gray-50 p-4 rounded-lg flex items-center">
+                                <i class="fa fa-user-o text-primary mr-3 text-xl"></i>
+                                <span>社区居民：普通电动自行车使用者</span>
+                            </div>
+                            <div class="bg-gray-50 p-4 rounded-lg flex items-center">
+                                <i class="fa fa-motorcycle text-primary mr-3 text-xl"></i>
+                                <span>快递、外卖从业人员：高频使用者</span>
+                            </div>
+                            <div class="bg-gray-50 p-4 rounded-lg flex items-center">
+                                <i class="fa fa-building-o text-primary mr-3 text-xl"></i>
+                                <span>社区物业管理人员：直接管理者</span>
+                            </div>
+                            <div class="bg-gray-50 p-4 rounded-lg flex items-center">
+                                <i class="fa fa-users text-primary mr-3 text-xl"></i>
+                                <span>街道、社区工作人员：基层干部</span>
+                            </div>
+                            <div class="bg-gray-50 p-4 rounded-lg flex items-center">
+                                <i class="fa fa-shield text-primary mr-3 text-xl"></i>
+                                <span>城管、交警等执法人员：秩序管理者</span>
+                            </div>
+                            <div class="bg-gray-50 p-4 rounded-lg flex items-center">
+                                <i class="fa fa-fire-extinguisher text-primary mr-3 text-xl"></i>
+                                <span>消防救援人员：安全隐患关注者</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="method-content hidden p-4" id="collection">
+                        <h3 class="text-xl font-semibold mb-4 text-dark">2.2 数据收集方法</h3>
+                        <div class="space-y-6">
+                            <div class="bg-blue-50 p-5 rounded-lg">
+                                <h4 class="font-bold text-lg mb-2 text-primary flex items-center">
+                                    <i class="fa fa-list-alt mr-2"></i>1. 问卷调查法
+                                </h4>
+                                <p class="mb-2">设计结构化问卷，针对不同群体开展调查，收集使用频率、停车习惯、满意度等信息</p>
+                                <p class="text-gray-600">共收集有效问卷586份，其中社区居民327份，骑手153份，物业56份，街道人员50份</p>
+                            </div>
+                            
+                            <div class="bg-blue-50 p-5 rounded-lg">
+                                <h4 class="font-bold text-lg mb-2 text-primary flex items-center">
+                                    <i class="fa fa-eye mr-2"></i>2. 实地观察法
+                                </h4>
+                                <p class="mb-2">对荔湾区多个典型区域进行实地观察，包括住宅小区、商业区、地铁站、学校周边</p>
+                                <p class="text-gray-600">记录不同区域、不同时段的停放状况，拍摄照片和视频作为辅助分析材料</p>
+                            </div>
+                            
+                            <div class="bg-blue-50 p-5 rounded-lg">
+                                <h4 class="font-bold text-lg mb-2 text-primary flex items-center">
+                                    <i class="fa fa-comments-o mr-2"></i>3. 深度访谈法
+                                </h4>
+                                <p class="mb-2">对关键知情者进行深度访谈，包括街道负责人、居委会主任、物业经理、消防部门负责人等</p>
+                                <p class="text-gray-600">共进行深度访谈32人次，每次访谈时间约60-90分钟，形成详细记录</p>
+                            </div>
+                            
+                            <div class="bg-blue-50 p-5 rounded-lg">
+                                <h4 class="font-bold text-lg mb-2 text-primary flex items-center">
+                                    <i class="fa fa-database mr-2"></i>4. 二手资料分析法
+                                </h4>
+                                <p class="mb-2">收集整理政府统计数据、政策文件、学术研究、媒体报道、行业报告等</p>
+                                <p class="text-gray-600">重点收集2024-2025年最新数据，确保研究时效性</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="method-content hidden p-4" id="analysis">
+                        <h3 class="text-xl font-semibold mb-4 text-dark">2.3 数据分析方法</h3>
+                        <p class="mb-4">采用定性与定量相结合的数据分析方法，确保研究的科学性和准确性：</p>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="border border-gray-200 rounded-lg p-5 hover:shadow-md transition-shadow">
+                                <div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary mb-3">
+                                    <i class="fa fa-bar-chart text-xl"></i>
+                                </div>
+                                <h4 class="font-bold text-lg mb-2">描述性统计分析</h4>
+                                <ul class="list-disc pl-5 space-y-1 text-gray-700">
+                                    <li>频次分析：统计各类问题发生频率</li>
+                                    <li>交叉分析：比较不同群体行为差异</li>
+                                    <li>相关分析：探索变量之间关联性</li>
+                                    <li>使用SPSS软件进行数据处理</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="border border-gray-200 rounded-lg p-5 hover:shadow-md transition-shadow">
+                                <div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary mb-3">
+                                    <i class="fa fa-file-text-o text-xl"></i>
+                                </div>
+                                <h4 class="font-bold text-lg mb-2">内容分析法</h4>
+                                <ul class="list-disc pl-5 space-y-1 text-gray-700">
+                                    <li>对访谈资料进行主题提炼</li>
+                                    <li>对观察记录进行特征识别</li>
+                                    <li>分析问题核心特征和机制</li>
+                                    <li>形成系统化分析框架</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="border border-gray-200 rounded-lg p-5 hover:shadow-md transition-shadow">
+                                <div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary mb-3">
+                                    <i class="fa fa-folder-open-o text-xl"></i>
+                                </div>
+                                <h4 class="font-bold text-lg mb-2">案例分析法</h4>
+                                <ul class="list-disc pl-5 space-y-1 text-gray-700">
+                                    <li>成功案例：分析有效经验</li>
+                                    <li>困难案例：探究问题根源</li>
+                                    <li>典型案例深度剖析</li>
+                                    <li>提炼可复制的经验模式</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="border border-gray-200 rounded-lg p-5 hover:shadow-md transition-shadow">
+                                <div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary mb-3">
+                                    <i class="fa fa-balance-scale text-xl"></i>
+                                </div>
+                                <h4 class="font-bold text-lg mb-2">比较分析法</h4>
+                                <ul class="list-disc pl-5 space-y-1 text-gray-700">
+                                    <li>区域比较：中心城区与郊区</li>
+                                    <li>群体比较：居民与骑手</li>
+                                    <li>城市比较：不同规模城市</li>
+                                    <li>分析差异原因和影响因素</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 三、电动自行车停放问题现状分析 -->
+        <section id="current" class="mb-16 scroll-mt-24">
+            <div class="bg-white rounded-xl shadow-lg p-6 md:p-8 transition-transform duration-300 hover:shadow-xl">
+                <div class="flex items-center mb-6">
+                    <div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-white mr-4">
+                        <i class="fa fa-bar-chart"></i>
+                    </div>
+                    <h2 class="text-2xl md:text-3xl font-bold text-primary">三、电动自行车停放问题现状分析</h2>
+                </div>
+                
+                <!-- 3.1 保有量与使用特点 -->
+                <div class="mb-10">
+                    <h3 class="text-xl font-semibold mb-4 text-dark flex items-center">
+                        <span class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center mr-3 text-sm">3.1</span>
+                        电动自行车保有量与使用特点
+                    </h3>
+                    
+                    <div class="mb-6">
+                        <h4 class="font-bold text-lg mb-3">3.1.1 保有量快速增长</h4>
+                        <p class="mb-4">根据最新统计数据，我国电动自行车保有量已达3.8亿辆，且仍在以每年约100万辆的速度增长。广州市电动自行车保有量超过500万辆，按1873.4万常住人口计算，平均每3-4人拥有1辆。</p>
+                        
+                        <div class="my-6">
+                            <h5 class="font-semibold mb-3">主要城市电动自行车保有量对比</h5>
+                            <div class="h-64">
+                                <canvas id="ownershipChart"></canvas>
+                            </div>
+                        </div>
+                        
+                        <p>电动自行车已成为城市居民短途出行的主要交通工具。据统计，在2-7公里的出行中，电动自行车出行占比已超过30%。这种出行方式在快递、外卖等新业态中尤为普及，骑手日均骑行距离达120-150公里。</p>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-bold text-lg mb-3">3.1.2 使用特点分析</h4>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+                            <div class="bg-gray-50 p-5 rounded-lg border-t-4 border-primary">
+                                <h5 class="font-bold mb-2 flex items-center">
+                                    <i class="fa fa-map-marker text-primary mr-2"></i>使用场景多元化
+                                </h5>
+                                <ul class="list-disc pl-5 space-y-1 text-gray-700">
+                                    <li>通勤出行：住所与工作地点</li>
+                                    <li>购物出行：超市、市场等</li>
+                                    <li>接送子女：上下学接送</li>
+                                    <li>快递外卖：货物投递</li>
+                                    <li>休闲娱乐：短途休闲</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="bg-gray-50 p-5 rounded-lg border-t-4 border-primary">
+                                <h5 class="font-bold mb-2 flex items-center">
+                                    <i class="fa fa-clock-o text-primary mr-2"></i>使用时段集中
+                                </h5>
+                                <ul class="list-disc pl-5 space-y-1 text-gray-700">
+                                    <li>早高峰（7:00-9:00）：通勤、送学</li>
+                                    <li>午间（11:30-13:30）：午餐配送</li>
+                                    <li>晚高峰（17:30-19:30）：下班、购物</li>
+                                    <li>夜间（20:00-22:00）：外卖配送高峰</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="bg-gray-50 p-5 rounded-lg border-t-4 border-primary">
+                                <h5 class="font-bold mb-2 flex items-center">
+                                    <i class="fa fa-user-circle-o text-primary mr-2"></i>骑手群体特征
+                                </h5>
+                                <ul class="list-disc pl-5 space-y-1 text-gray-700">
+                                    <li>日均骑行时间长，频次高</li>
+                                    <li>对停车便捷性要求高</li>
+                                    <li>常因抢时间而违规停放</li>
+                                    <li>车辆使用率高，电池更换频繁</li>
+                                    <li>收入与配送效率直接相关</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 3.2 停放问题痛点 -->
+                <div class="mb-10">
+                    <h3 class="text-xl font-semibold mb-4 text-dark flex items-center">
+                        <span class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center mr-3 text-sm">3.2</span>
+                        电动自行车停放问题痛点
+                    </h3>
+                    
+                    <!-- 痛点标签页 -->
+                    <div class="mb-6">
+                        <div class="flex flex-wrap border-b border-gray-200">
+                            <button class="pain-point-tab active px-4 py-2 font-medium text-primary border-b-2 border-primary" data-target="space">停放空间不足</button>
+                            <button class="pain-point-tab px-4 py-2 font-medium text-gray-500 hover:text-primary" data-target="order">停放秩序混乱</button>
+                            <button class="pain-point-tab px-4 py-2 font-medium text-gray-500 hover:text-primary" data-target="battery">电池安全隐患</button>
+                            <button class="pain-point-tab px-4 py-2 font-medium text-gray-500 hover:text-primary" data-target="modification">非法改装问题</button>
+                        </div>
+                        
+                        <div class="pain-point-content active p-4" id="space">
+                            <h4 class="font-bold text-lg mb-3">3.2.1 停放空间不足</h4>
+                            
+                            <div class="mb-5">
+                                <h5 class="font-semibold mb-2">1. 供需矛盾突出</h5>
+                                <p class="mb-3">调查显示，62%的居民认为停车位"紧张"或"非常紧张"。社区现有非机动车停放点17处，其中地面停车棚8个，地下车库停放区9个。地面车棚均配备充电桩，单棚容量约20辆，地下车库停放区无充电设施，容量约50辆。</p>
+                                
+                                <div class="bg-red-50 p-4 rounded-lg border-l-4 border-red-500 mb-4">
+                                    <p class="font-medium">观察发现：高峰时段（早7:00-8:30、晚17:30-19:00）车棚使用率达90%，地下车库使用率不足30%。以某社区3号楼为例，住户312户，楼下车棚容量仅40辆，晚高峰时段车辆溢出至消防通道，造成安全隐患。</p>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <h5 class="font-semibold mb-2">2. 地铁站周边压力大</h5>
+                                <p class="mb-3">地铁站周边是电动自行车停放的"重灾区"。以沙河站为例，高峰时段非机动车停放达近万辆，非机动车尤其是电动自行车数量过多、堆叠严重，严重影响市民通行和环境秩序。</p>
+                                <p>花地湾地铁站周边非机动车流量极大，早晚高峰时，车辆甚至"挤"上人行道。滘口地铁站经过两个月的集中整治，周边停车秩序已然焕然一新，但仍面临较大压力。</p>
+                            </div>
+                        </div>
+                        
+                        <div class="pain-point-content hidden p-4" id="order">
+                            <h4 class="font-bold text-lg mb-3">3.2.2 停放秩序混乱</h4>
+                            
+                            <div class="space-y-5">
+                                <div>
+                                    <h5 class="font-semibold mb-2">1. 乱停乱放现象普遍</h5>
+                                    <p class="mb-3">53%的受访者承认曾将车辆停放在楼道、绿化带等非规定区域。在老旧小区和城中村，电动自行车随意停放现象尤为严重，不仅占用公共空间，还影响正常通行。</p>
+                                    <p>在商业区周边，外卖电动车常随意停放在人行道、非机动车道，甚至机动车道上，造成交通拥堵。由于很多商圈附近没有设置外卖车辆临时停放区，违规停放问题就更突出。</p>
+                                </div>
+                                
+                                <div>
+                                    <h5 class="font-semibold mb-2">2. 占用消防通道</h5>
+                                    <div class="bg-red-50 p-4 rounded-lg mb-3">
+                                        <p class="font-medium">调查发现，35%的小区存在电动自行车占用消防通道的情况，这在高层建筑中尤为危险。一旦发生火灾，将对居民的生命安全造成严重威胁。</p>
+                                    </div>
+                                </div>
+                                
+                                <div>
+                                    <h5 class="font-semibold mb-2">3. 楼道停放与充电</h5>
+                                    <p class="mb-3">楼道是电动自行车停放和充电的高发区域。数据显示，74%的电动自行车火灾发生在居民住宅楼内，起火原因80%以上为电池热失控引起。</p>
+                                    <div class="bg-blue-50 p-4 rounded-lg border-l-4 border-primary">
+                                        <p class="font-medium">《高层民用建筑消防安全管理规定》明确规定，禁止在高层民用建筑公共门厅、疏散走道、楼梯间、安全出口停放电动自行车或者为电动自行车充电。拒不改正的，将处最高1万元罚款。</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="pain-point-content hidden p-4" id="battery">
+                            <h4 class="font-bold text-lg mb-3">3.2.3 电池安全隐患</h4>
+                            
+                            <div class="space-y-5">
+                                <div>
+                                    <h5 class="font-semibold mb-2">1. 电池老化与超期服役</h5>
+                                    <p class="mb-3">据不完全统计，广州市电动自行车品牌众多，电池互不兼容，有近50%的电动自行车安装的电池超过了3年保质期，存在较多超期服役电池。老化电池继续使用、不同容量电池混用，内部线路容易短路、引起自燃。</p>
+                                </div>
+                                
+                                <div>
+                                    <h5 class="font-semibold mb-2">2. 违规充电问题严重</h5>
+                                    <p class="mb-3">调查发现，15%的居民因车棚充电桩损坏被迫私拉电线充电。许多居民为了方便，从家中窗户拉电线到楼下为电动自行车充电，这种"飞线充电"存在严重的触电和火灾风险。</p>
+                                    
+                                    <div class="bg-red-50 p-4 rounded-lg">
+                                        <p class="font-medium">实验数据：使用非原装充电器充电，仅仅3分钟，电池盒内部温度就迅速飙升至近900℃，起火点附近地面温度达到160℃。</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="pain-point-content hidden p-4" id="modification">
+                            <h4 class="font-bold text-lg mb-3">3.2.4 非法改装问题</h4>
+                            
+                            <div class="space-y-5">
+                                <div>
+                                    <h5 class="font-semibold mb-2">1. 车辆改装现象普遍</h5>
+                                    <p class="mb-3">调查发现，市场上的电动自行车普遍存在"轻摩化"现象。生产企业在车辆出厂时对车辆改装预留了空间，预埋下交通和消防隐患。</p>
+                                    
+                                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
+                                        <div class="bg-gray-50 p-3 rounded-lg flex items-center">
+                                            <i class="fa fa-tachometer text-red-500 mr-2"></i>
+                                            <span>解除限速：提高最高速度</span>
+                                        </div>
+                                        <div class="bg-gray-50 p-3 rounded-lg flex items-center">
+                                            <i class="fa fa-cog text-red-500 mr-2"></i>
+                                            <span>更换大功率电机：增加动力</span>
+                                        </div>
+                                        <div class="bg-gray-50 p-3 rounded-lg flex items-center">
+                                            <i class="fa fa-battery-full text-red-500 mr-2"></i>
+                                            <span>加装电池：增加续航能力</span>
+                                        </div>
+                                        <div class="bg-gray-50 p-3 rounded-lg flex items-center">
+                                            <i class="fa fa-car text-red-500 mr-2"></i>
+                                            <span>改装外观：加装雨棚、货架</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div>
+                                    <h5 class="font-semibold mb-2">2. 改装安全隐患大</h5>
+                                    <div class="bg-red-50 p-4 rounded-lg mb-3">
+                                        <p class="font-medium mb-2">据统计，2023年上半年，广州市发生涉电动自行车交通事故同比上升63%，全市涉电动自行车交通受伤人数占交通事故受伤总人数比值从2020年的19.1%上升到27.4%，涉电动自行车火灾占火灾总数比值从2020年的9.48%上升到2022年的16.8%。</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 3.3 不同区域停放问题比较 -->
+                <div class="mb-10">
+                    <h3 class="text-xl font-semibold mb-4 text-dark flex items-center">
+                        <span class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center mr-3 text-sm">3.3</span>
+                        不同区域停放问题比较
+                    </h3>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="border border-gray-200 rounded-lg overflow-hidden hover:shadow-md transition-shadow">
+                            <div class="bg-primary text-white p-3">
+                                <h4 class="font-bold text-lg flex items-center">
+                                    <i class="fa fa-home mr-2"></i>社区住宅区域
+                                </h4>
+                            </div>
+                            <div class="p-4">
+                                <ul class="space-y-3">
+                                    <li class="flex">
+                                        <i class="fa fa-angle-right text-primary mt-1 mr-2"></i>
+                                        <span><strong>老旧小区问题突出：</strong>停车位不足，物业管理薄弱，居民安全意识不足</span>
+                                    </li>
+                                    <li class="flex">
+                                        <i class="fa fa-angle-right text-primary mt-1 mr-2"></i>
+                                        <span><strong>新建小区规划缺陷：</strong>设施规划不合理，充电设施不足</span>
+                                    </li>
+                                    <li class="flex">
+                                        <i class="fa fa-angle-right text-primary mt-1 mr-2"></i>
+                                        <span><strong>社区管理难度大：</strong>执法权限有限，管理力量不足，居民配合度低</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="border border-gray-200 rounded-lg overflow-hidden hover:shadow-md transition-shadow">
+                            <div class="bg-primary text-white p-3">
+                                <h4 class="font-bold text-lg flex items-center">
+                                    <i class="fa fa-graduation-cap mr-2"></i>学校周边区域
+                                </h4>
+                            </div>
+                            <div class="p-4">
+                                <ul class="space-y-3">
+                                    <li class="flex">
+                                        <i class="fa fa-angle-right text-primary mt-1 mr-2"></i>
+                                        <span><strong>上下学时段压力集中：</strong>乱停乱放严重，影响交通秩序</span>
+                                    </li>
+                                    <li class="flex">
+                                        <i class="fa fa-angle-right text-primary mt-1 mr-2"></i>
+                                        <span><strong>停车设施不足：</strong>停车位紧张，分布不均</span>
+                                    </li>
+                                    <li class="flex">
+                                        <i class="fa fa-angle-right text-primary mt-1 mr-2"></i>
+                                        <span><strong>安全隐患突出：</strong>堵塞消防通道，占用盲道，车辆倾倒风险</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="border border-gray-200 rounded-lg overflow-hidden hover:shadow-md transition-shadow">
+                            <div class="bg-primary text-white p-3">
+                                <h4 class="font-bold text-lg flex items-center">
+                                    <i class="fa fa-shopping-bag mr-2"></i>商业区周边区域
+                                </h4>
+                            </div>
+                            <div class="p-4">
+                                <ul class="space-y-3">
+                                    <li class="flex">
+                                        <i class="fa fa-angle-right text-primary mt-1 mr-2"></i>
+                                        <span><strong>外卖车辆停放无序：</strong>乱停乱放堵塞道路，缺乏临时停放区</span>
+                                    </li>
+                                    <li class="flex">
+                                        <i class="fa fa-angle-right text-primary mt-1 mr-2"></i>
+                                        <span><strong>配送需求与管理矛盾：</strong>骑手为效率违规停放，影响收入</span>
+                                    </li>
+                                    <li class="flex">
+                                        <i class="fa fa-angle-right text-primary mt-1 mr-2"></i>
+                                        <span><strong>临时停放需求大：</strong>周转快、流动性大，管理困难</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="border border-gray-200 rounded-lg overflow-hidden hover:shadow-md transition-shadow">
+                            <div class="bg-primary text-white p-3">
+                                <h4 class="font-bold text-lg flex items-center">
+                                    <i class="fa fa-subway mr-2"></i>地铁站周边区域
+                                </h4>
+                            </div>
+                            <div class="p-4">
+                                <ul class="space-y-3">
+                                    <li class="flex">
+                                        <i class="fa fa-angle-right text-primary mt-1 mr-2"></i>
+                                        <span><strong>接驳需求大：</strong>市民骑非机动车接驳地铁，需求集中</span>
+                                    </li>
+                                    <li class="flex">
+                                        <i class="fa fa-angle-right text-primary mt-1 mr-2"></i>
+                                        <span><strong>停放空间不足：</strong>老城区站点未预留足够空间，设计不合理</span>
+                                    </li>
+                                    <li class="flex">
+                                        <i class="fa fa-angle-right text-primary mt-1 mr-2"></i>
+                                        <span><strong>管理难度大：</strong>流动性大、时段集中、数量多</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 3.4 不同群体认知与行为差异 -->
+                <div>
+                    <h3 class="text-xl font-semibold mb-4 text-dark flex items-center">
+                        <span class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center mr-3 text-sm">3.4</span>
+                        不同群体对电动自行车停放问题的认知与行为差异
+                    </h3>
+                    
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full bg-white border border-gray-200 rounded-lg">
+                            <thead>
+                                <tr class="bg-primary text-white">
+                                    <th class="py-3 px-4 text-left">群体类型</th>
+                                    <th class="py-3 px-4 text-left">使用特点</th>
+                                    <th class="py-3 px-4 text-left">停放行为</th>
+                                    <th class="py-3 px-4 text-left">对管理措施态度</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-200">
+                                <tr>
+                                    <td class="py-3 px-4 font-medium">居民群体</td>
+                                    <td class="py-3 px-4">使用频率较低，主要用于短途出行，每天1-2次</td>
+                                    <td class="py-3 px-4">追求便利性，安全意识不足，从众心理，贪图方便</td>
+                                    <td class="py-3 px-4">支持规范管理，但对限制措施有抵触，希望提供便利</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-3 px-4 font-medium">骑手群体</td>
+                                    <td class="py-3 px-4">高频使用，日均骑行5次以上，时间紧迫性强</td>
+                                    <td class="py-3 px-4">时间优先，扎堆停放，临时停放，不规范操作</td>
+                                    <td class="py-3 px-4">理解但无奈，有抵触情绪，希望得到理解，期待改善条件</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-3 px-4 font-medium">物业管理人员</td>
+                                    <td class="py-3 px-4">负责日常管理，包括规划维护、引导规范、劝阻制止</td>
+                                    <td class="py-3 px-4">设置隔离设施，张贴标识，定期巡查，集中清理</td>
+                                    <td class="py-3 px-4">希望明确责任，赋予执法权限，增加财政支持，加强宣传</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-3 px-4 font-medium">基层政府工作人员</td>
+                                    <td class="py-3 px-4">参与治理，协调各部门，执行政策，回应诉求</td>
+                                    <td class="py-3 px-4">推行"门前三包"，建设示范街道，实施以旧换新</td>
+                                    <td class="py-3 px-4">建议完善法规，强化协同，加强源头管控，推动共治共享</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 四、深层次原因分析 -->
+        <section id="reason" class="mb-16 scroll-mt-24">
+            <div class="bg-white rounded-xl shadow-lg p-6 md:p-8 transition-transform duration-300 hover:shadow-xl">
+                <div class="flex items-center mb-6">
+                    <div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-white mr-4">
+                        <i class="fa fa-search-plus"></i>
+                    </div>
+                    <h2 class="text-2xl md:text-3xl font-bold text-primary">四、电动自行车停放问题的深层次原因分析</h2>
+                </div>
+                
+                <!-- 原因分析卡片 -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+                    <!-- 4.1 规划与设计层面 -->
+                    <div class="border border-gray-200 rounded-lg overflow-hidden hover:shadow-md transition-shadow">
+                        <div class="bg-primary/10 p-4 border-b border-gray-200">
+                            <h3 class="text-xl font-semibold text-primary flex items-center">
+                                <span class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center mr-3 text-sm">4.1</span>
+                                规划与设计层面
+                            </h3>
+                        </div>
+                        <div class="p-5 space-y-4">
+                            <div>
+                                <h4 class="font-bold mb-2 flex items-center">
+                                    <i class="fa fa-map text-primary mr-2"></i>城市规划滞后
+                                </h4>
+                                <ul class="list-disc pl-5 space-y-1 text-gray-700">
+                                    <li>非机动车道建设不足，设置率低（广州32.2% vs 北京95%）</li>
+                                    <li>停车设施规划不足，标准低、布局不合理、缺乏系统性</li>
+                                    <li>中心城区人口密度高，人、车过度集聚</li>
+                                </ul>
+                            </div>
+                            
+                            <div>
+                                <h4 class="font-bold mb-2 flex items-center">
+                                    <i class="fa fa-building text-primary mr-2"></i>建筑设计缺陷
+                                </h4>
+                                <ul class="list-disc pl-5 space-y-1 text-gray-700">
+                                    <li>住宅缺乏专用停车区域和充电设施</li>
+                                    <li>电梯设计未考虑电动自行车上楼问题</li>
+                                    <li>公共建筑停车空间不足、布局不合理</li>
+                                </ul>
+                            </div>
+                            
+                            <div>
+                                <h4 class="font-bold mb-2 flex items-center">
+                                    <i class="fa fa-wrench text-primary mr-2"></i>基础设施老化
+                                </h4>
+                                <ul class="list-disc pl-5 space-y-1 text-gray-700">
+                                    <li>老旧小区停车棚、充电设施老化</li>
+                                    <li>设施维护不及时，报修渠道不畅</li>
+                                    <li>责任不明确，维修资金不足</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 4.2 管理与制度层面 -->
+                    <div class="border border-gray-200 rounded-lg overflow-hidden hover:shadow-md transition-shadow">
+                        <div class="bg-primary/10 p-4 border-b border-gray-200">
+                            <h3 class="text-xl font-semibold text-primary flex items-center">
+                                <span class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center mr-3 text-sm">4.2</span>
+                                管理与制度层面
+                            </h3>
+                        </div>
+                        <div class="p-5 space-y-4">
+                            <div>
+                                <h4 class="font-bold mb-2 flex items-center">
+                                    <i class="fa fa-gavel text-primary mr-2"></i>法律法规不完善
+                                </h4>
+                                <ul class="list-disc pl-5 space-y-1 text-gray-700">
+                                    <li>法规滞后，标准过时，界定模糊</li>
+                                    <li>处罚力度不足（5-50元罚款），无法形成威慑</li>
+                                    <li>执法依据不足，执法标准不一</li>
+                                </ul>
+                            </div>
+                            
+                            <div>
+                                <h4 class="font-bold mb-2 flex items-center">
+                                    <i class="fa fa-sitemap text-primary mr-2"></i>管理机制不健全
+                                </h4>
+                                <ul class="list-disc pl-5 space-y-1 text-gray-700">
+                                    <li>部门职责不清，多头管理，推诿扯皮</li>
+                                    <li>全链条监管体系不完善，生产、销售、使用、回收监管不足</li>
+                                    <li>基层治理能力不足，人员、资金、技术有限</li>
+                                </ul>
+                            </div>
+                            
+                            <div>
+                                <h4 class="font-bold mb-2 flex items-center">
+                                    <i class="fa fa-refresh text-primary mr-2"></i>长效机制缺乏
+                                </h4>
+                                <ul class="list-disc pl-5 space-y-1 text-gray-700">
+                                    <li>缺乏常态化管理，运动式治理为主</li>
+                                    <li>多元共治机制尚未形成，社会参与不足</li>
+                                    <li>缺乏评估反馈机制，效果评估难</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 4.3 技术与设施层面 -->
+                    <div class="border border-gray-200 rounded-lg overflow-hidden hover:shadow-md transition-shadow">
+                        <div class="bg-primary/10 p-4 border-b border-gray-200">
+                            <h3 class="text-xl font-semibold text-primary flex items-center">
+                                <span class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center mr-3 text-sm">4.3</span>
+                                技术与设施层面
+                            </h3>
+                        </div>
+                        <div class="p-5 space-y-4">
+                            <div>
+                                <h4 class="font-bold mb-2 flex items-center">
+                                    <i class="fa fa-microchip text-primary mr-2"></i>技术监管手段不足
+                                </h4>
+                                <ul class="list-disc pl-5 space-y-1 text-gray-700">
+                                    <li>智能监管技术应用不足，电子围栏、视频监控覆盖有限</li>
+                                    <li>充电安全技术落后，缺乏过流、过压保护</li>
+                                    <li>车辆技术标准滞后，安全标准不高</li>
+                                </ul>
+                            </div>
+                            
+                            <div>
+                                <h4 class="font-bold mb-2 flex items-center">
+                                    <i class="fa fa-road text-primary mr-2"></i>基础设施建设滞后
+                                </h4>
+                                <ul class="list-disc pl-5 space-y-1 text-gray-700">
+                                    <li>停放设施总量不足，分布不均，设计不合理</li>
+                                    <li>充电设施不足，布局不合理，接口不统一</li>
+                                    <li>配套设施不完善，消防、照明、排水设施不足</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 4.4 社会与文化层面 -->
+                    <div class="border border-gray-200 rounded-lg overflow-hidden hover:shadow-md transition-shadow">
+                        <div class="bg-primary/10 p-4 border-b border-gray-200">
+                            <h3 class="text-xl font-semibold text-primary flex items-center">
+                                <span class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center mr-3 text-sm">4.4</span>
+                                社会与文化层面
+                            </h3>
+                        </div>
+                        <div class="p-5 space-y-4">
+                            <div>
+                                <h4 class="font-bold mb-2 flex items-center">
+                                    <i class="fa fa-exclamation-triangle text-primary mr-2"></i>安全意识淡薄
+                                </h4>
+                                <ul class="list-disc pl-5 space-y-1 text-gray-700">
+                                    <li>居民对电池安全、充电安全认识不足</li>
+                                    <li>骑手为赶时间忽视安全规则</li>
+                                    <li>管理者对安全风险认识不足</li>
+                                </ul>
+                            </div>
+                            
+                            <div>
+                                <h4 class="font-bold mb-2 flex items-center">
+                                    <i class="fa fa-users text-primary mr-2"></i>社会文化因素
+                                </h4>
+                                <ul class="list-disc pl-5 space-y-1 text-gray-700">
+                                    <li>"便利性优先"文化导致违规停放</li>
+                                    <li>规则意识淡薄，公共空间意识缺失</li>
+                                    <li>将公共空间视为"私人领地"</li>
+                                </ul>
+                            </div>
+                            
+                            <div>
+                                <h4 class="font-bold mb-2 flex items-center">
+                                    <i class="fa fa-money text-primary mr-2"></i>经济因素影响
+                                </h4>
+                                <ul class="list-disc pl-5 space-y-1 text-gray-700">
+                                    <li>经济成本考量影响设施改造和车辆更换</li>
+                                    <li>利益驱动导致超标车生产、非法改装</li>
+                                    <li>收入差距影响管理措施承受能力</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 原因分析图表 -->
+                <div class="mt-8">
+                    <h3 class="text-xl font-semibold mb-4 text-dark">电动自行车停放问题原因权重分析</h3>
+                    <div class="h-64">
+                        <canvas id="reasonChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 五、解决方案 -->
+        <section id="solution" class="mb-16 scroll-mt-24">
+            <div class="bg-white rounded-xl shadow-lg p-6 md:p-8 transition-transform duration-300 hover:shadow-xl">
+                <div class="flex items-center mb-6">
+                    <div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-white mr-4">
+                        <i class="fa fa-lightbulb-o"></i>
+                    </div>
+                    <h2 class="text-2xl md:text-3xl font-bold text-primary">五、电动自行车停放问题的解决方案</h2>
+                </div>
+                
+                <!-- 解决方案选项卡 -->
+                <div class="mb-8">
+                    <div class="flex flex-wrap border-b border-gray-200">
+                        <button class="solution-tab active px-4 py-2 font-medium text-primary border-b-2 border-primary" data-target="planning">规划与设计优化</button>
+                        <button class="solution-tab px-4 py-2 font-medium text-gray-500 hover:text-primary" data-target="management">管理与制度创新</button>
+                        <button class="solution-tab px-4 py-2 font-medium text-gray-500 hover:text-primary" data-target="technology">技术与设施升级</button>
+                        <button class="solution-tab px-4 py-2 font-medium text-gray-500 hover:text-primary" data-target="social">社会与文化建设</button>
+                    </div>
+                    
+                    <!-- 5.1 规划与设计优化 -->
+                    <div class="solution-content active p-4" id="planning">
+                        <h3 class="text-xl font-semibold mb-4 text-dark">5.1 规划与设计优化方案</h3>
+                        
+                        <div class="space-y-6">
+                            <div class="bg-blue-50 p-5 rounded-lg">
+                                <h4 class="font-bold text-lg mb-3 text-primary flex items-center">
+                                    <i class="fa fa-map mr-2"></i>5.1.1 城市规划优化
+                                </h4>
+                                
+                                <div class="mb-4">
+                                    <h5 class="font-semibold mb-2">完善非机动车道网络</h5>
+                                    <ul class="list-disc pl-5 space-y-2 text-gray-700">
+                                        <li>按照"应设尽设、能设快设"原则，3年内构建全覆盖非机动车道网络</li>
+                                        <li>因地制宜，形成"一路一策"项目清单，分级分类推进建设</li>
+                                        <li>老旧城区通过减少车道数、压缩机动车道宽度等方式重构道路断面</li>
+                                    </ul>
+                                </div>
+                                
+                                <div>
+                                    <h5 class="font-semibold mb-2">优化停车设施规划</h5>
+                                    <ul class="list-disc pl-5 space-y-2 text-gray-700">
+                                        <li>提高非机动车停车位配建标准，适应电动自行车增长趋势</li>
+                                        <li>编制电动自行车停车设施专项规划，明确布局、规模和时序</li>
+                                        <li>优化停车设施布局，根据不同区域功能和需求合理布局</li>
+                                        <li>预留充电设施空间，为后期安装创造条件</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-blue-50 p-5 rounded-lg">
+                                <h4 class="font-bold text-lg mb-3 text-primary flex items-center">
+                                    <i class="fa fa-building mr-2"></i>5.1.2 建筑设计优化
+                                </h4>
+                                
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div>
+                                        <h5 class="font-semibold mb-2">住宅建筑设计优化</h5>
+                                        <ul class="list-disc pl-5 space-y-1 text-gray-700">
+                                            <li>优化电动自行车停放区域位置和布局</li>
+                                            <li>预留充电设施安装条件</li>
+                                            <li>设计专用充电区域并配备消防设施</li>
+                                            <li>改进电梯设计，限制电动自行车上楼</li>
+                                        </ul>
+                                    </div>
+                                    
+                                    <div>
+                                        <h5 class="font-semibold mb-2">公共建筑设计优化</h5>
+                                        <ul class="list-disc pl-5 space-y-1 text-gray-700">
+                                            <li>增加公共建筑周边电动自行车停车位</li>
+                                            <li>优化停车位布局，靠近建筑出入口</li>
+                                            <li>增加遮阳避雨设施，改善使用体验</li>
+                                            <li>预留充电设施安装条件</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-blue-50 p-5 rounded-lg">
+                                <h4 class="font-bold text-lg mb-3 text-primary flex items-center">
+                                    <i class="fa fa-wrench mr-2"></i>5.1.3 老旧小区改造
+                                </h4>
+                                <ul class="list-disc pl-5 space-y-2 text-gray-700">
+                                    <li>盘活闲置空间：利用小区内闲置空地、废弃花坛改建停车区域</li>
+                                    <li>改造现有设施：对老旧停车棚、充电设施进行改造升级</li>
+                                    <li>增加充电设施：满足居民充电需求，减少飞线充电</li>
+                                    <li>改善消防条件：完善消防设施，确保消防安全</li>
+                                </ul>
+                                <div class="mt-3 bg-white p-3 rounded border border-gray-200">
+                                    <p class="text-gray-700"><strong>案例：</strong>某社区将2号楼西侧废弃花坛（约80㎡）改建为双层停车架，预计可增加30%的停车容量。</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 5.2 管理与制度创新 -->
+                    <div class="solution-content hidden p-4" id="management">
+                        <h3 class="text-xl font-semibold mb-4 text-dark">5.2 管理与制度创新方案</h3>
+                        
+                        <div class="space-y-6">
+                            <div class="bg-green-50 p-5 rounded-lg">
+                                <h4 class="font-bold text-lg mb-3 text-primary flex items-center">
+                                    <i class="fa fa-gavel mr-2"></i>5.2.1 完善法律法规
+                                </h4>
+                                
+                                <div class="space-y-4">
+                                    <div>
+                                        <h5 class="font-semibold mb-2">修订完善相关法规</h5>
+                                        <ul class="list-disc pl-5 space-y-1 text-gray-700">
+                                            <li>修订《电动自行车安全技术规范》，提高安全标准</li>
+                                            <li>制定《电动自行车管理条例》，明确全环节管理要求</li>
+                                            <li>修订《道路交通安全法》，增加违规处罚规定</li>
+                                            <li>制定《电动自行车充电设施安全管理规定》</li>
+                                        </ul>
+                                    </div>
+                                    
+                                    <div>
+                                        <h5 class="font-semibold mb-2">明确部门职责</h5>
+                                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                            <div class="bg-white p-3 rounded border border-gray-200">
+                                                <p class="font-medium">公安部门：</p>
+                                                <p class="text-sm text-gray-600">电动自行车登记、道路交通安全管理</p>
+                                            </div>
+                                            <div class="bg-white p-3 rounded border border-gray-200">
+                                                <p class="font-medium">交通部门：</p>
+                                                <p class="text-sm text-gray-600">非机动车道、停车设施规划建设</p>
+                                            </div>
+                                            <div class="bg-white p-3 rounded border border-gray-200">
+                                                <p class="font-medium">市场监管部门：</p>
+                                                <p class="text-sm text-gray-600">生产、销售环节监管</p>
+                                            </div>
+                                            <div class="bg-white p-3 rounded border border-gray-200">
+                                                <p class="font-medium">消防部门：</p>
+                                                <p class="text-sm text-gray-600">消防安全监管</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-green-50 p-5 rounded-lg">
+                                <h4 class="font-bold text-lg mb-3 text-primary flex items-center">
+                                    <i class="fa fa-sitemap mr-2"></i>5.2.2 创新管理机制
+                                </h4>
+                                
+                                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                    <div class="bg-white p-4 rounded-lg border border-gray-200">
+                                        <h5 class="font-semibold mb-2 text-primary">全链条管理机制</h5>
+                                        <ul class="list-disc pl-5 space-y-1 text-sm text-gray-700">
+                                            <li>生产环节：严格执行生产标准</li>
+                                            <li>销售环节：建立销售企业备案制</li>
+                                            <li>使用环节：建立使用登记制度</li>
+                                            <li>回收环节：建立回收处理制度</li>
+                                        </ul>
+                                    </div>
+                                    
+                                    <div class="bg-white p-4 rounded-lg border border-gray-200">
+                                        <h5 class="font-semibold mb-2 text-primary">分级分类管理</h5>
+                                        <ul class="list-disc pl-5 space-y-1 text-sm text-gray-700">
+                                            <li>按区域特点分类管理</li>
+                                            <li>按使用性质分类管理</li>
+                                            <li>按车辆类型分类管理</li>
+                                            <li>按停放时间分类管理</li>
+                                        </ul>
+                                    </div>
+                                    
+                                    <div class="bg-white p-4 rounded-lg border border-gray-200">
+                                        <h5 class="font-semibold mb-2 text-primary">多元共治机制</h5>
+                                        <ul class="list-disc pl-5 space-y-1 text-sm text-gray-700">
+                                            <li>政府主导：政策制定、资源投入</li>
+                                            <li>企业负责：落实主体责任</li>
+                                            <li>社区协同：发挥组织作用</li>
+                                            <li>居民参与：提高自我管理</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 5.3 技术与设施升级 -->
+                    <div class="solution-content hidden p-4" id="technology">
+                        <h3 class="text-xl font-semibold mb-4 text-dark">5.3 技术与设施升级方案</h3>
+                        
+                        <div class="space-y-6">
+                            <div class="bg-purple-50 p-5 rounded-lg">
+                                <h4 class="font-bold text-lg mb-3 text-primary flex items-center">
+                                    <i class="fa fa-microchip mr-2"></i>5.3.1 应用智能监管技术
+                                </h4>
+                                
+                                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                                    <div class="bg-white p-4 rounded-lg border border-gray-200">
+                                        <h5 class="font-semibold mb-2 text-primary">物联网技术</h5>
+                                        <ul class="list-disc pl-5 space-y-1 text-sm text-gray-700">
+                                            <li>推广智能充电桩，实时监控充电过程</li>
+                                            <li>推广智能停车系统，实现车位智能管理</li>
+                                            <li>推广智能电池管理系统，实时监控电池状态</li>
+                                            <li>推广智能监控系统，实时监控停放区域</li>
+                                        </ul>
+                                    </div>
+                                    
+                                    <div class="bg-white p-4 rounded-lg border border-gray-200">
+                                        <h5 class="font-semibold mb-2 text-primary">大数据技术</h5>
+                                        <ul class="list-disc pl-5 space-y-1 text-sm text-gray-700">
+                                            <li>建立电动自行车大数据平台</li>
+                                            <li>应用大数据分析使用规律和难点</li>
+                                            <li>建立安全风险预警模型</li>
+                                            <li>科学评估管理措施效果</li>
+                                        </ul>
+                                    </div>
+                                    
+                                    <div class="bg-white p-4 rounded-lg border border-gray-200">
+                                        <h5 class="font-semibold mb-2 text-primary">人工智能技术</h5>
+                                        <ul class="list-disc pl-5 space-y-1 text-sm text-gray-700">
+                                            <li>视频智能分析违规行为</li>
+                                            <li>人脸识别追踪违规驾驶人</li>
+                                            <li>电子围栏划定禁停区域</li>
+                                            <li>智能调度骑手停放行为</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                
+                                <div class="bg-white p-4 rounded-lg border-l-4 border-primary">
+                                    <p class="text-gray-700"><i class="fa fa-quote-left text-primary mr-2"></i>鼓励有条件的小区引入物联网智慧监管系统，对电动自行车集中充电、停放等进行智能监控、自动报警、生成数据报表一体化智能监管，通过物联网、云计算、5G等信息技术实现智慧监管，助力基层电动自行车消防安全治理。</p>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-purple-50 p-5 rounded-lg">
+                                <h4 class="font-bold text-lg mb-3 text-primary flex items-center">
+                                    <i class="fa fa-road mr-2"></i>5.3.2 升级基础设施
+                                </h4>
+                                
+                                <div class="space-y-4">
+                                    <div>
+                                        <h5 class="font-semibold mb-2">增加停车设施供给</h5>
+                                        <ul class="list-disc pl-5 space-y-1 text-gray-700">
+                                            <li>利用闲置空地、废弃花坛、桥下空间设置停车位</li>
+                                            <li>改造现有设施，提高使用效率</li>
+                                            <li>建设立体停车设施，提高空间利用率</li>
+                                            <li>优化停车位布局，提高使用便利性</li>
+                                        </ul>
+                                    </div>
+                                    
+                                    <div>
+                                        <h5 class="font-semibold mb-2">完善充电设施</h5>
+                                        <ul class="list-disc pl-5 space-y-1 text-gray-700">
+                                            <li>加快充电设施建设，按照"应建尽建"原则推进</li>
+                                            <li>优化充电设施布局，提高使用便利性</li>
+                                            <li>推广智能充电技术，实现充满自停、异常断电</li>
+                                            <li>推动充电接口标准化，提高充电便利性</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 5.4 社会与文化建设 -->
+                    <div class="solution-content hidden p-4" id="social">
+                        <h3 class="text-xl font-semibold mb-4 text-dark">5.4 社会与文化建设方案</h3>
+                        
+                        <div class="space-y-6">
+                            <div class="bg-orange-50 p-5 rounded-lg">
+                                <h4 class="font-bold text-lg mb-3 text-primary flex items-center">
+                                    <i class="fa fa-book mr-2"></i>5.4.1 加强宣传教育
+                                </h4>
+                                
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div>
+                                        <h5 class="font-semibold mb-2">安全知识普及</h5>
+                                        <ul class="list-disc pl-5 space-y-1 text-gray-700">
+                                            <li>开展社区安全宣传活动</li>
+                                            <li>将安全教育纳入学校教育内容</li>
+                                            <li>对外卖、快递企业员工进行安全培训</li>
+                                            <li>制作通俗易懂的安全宣传材料</li>
+                                        </ul>
+                                    </div>
+                                    
+                                    <div>
+                                        <h5 class="font-semibold mb-2">文明出行倡导</h5>
+                                        <ul class="list-disc pl-5 space-y-1 text-gray-700">
+                                            <li>开展"文明骑行、规范停放"主题活动</li>
+                                            <li>开展"党员带头、文明先行"活动</li>
+                                            <li>开展"小手拉大手"活动</li>
+                                            <li>组织文明交通志愿者活动</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-orange-50 p-5 rounded-lg">
+                                <h4 class="font-bold text-lg mb-3 text-primary flex items-center">
+                                    <i class="fa fa-shield mr-2"></i>5.4.2 培育安全文化
+                                </h4>
+                                
+                                <div class="space-y-4">
+                                    <div>
+                                        <h5 class="font-semibold mb-2">培育安全价值观</h5>
+                                        <div class="flex flex-wrap gap-3">
+                                            <div class="bg-white px-4 py-2 rounded-full text-sm font-medium border border-primary text-primary">
+                                                生命至上
+                                            </div>
+                                            <div class="bg-white px-4 py-2 rounded-full text-sm font-medium border border-primary text-primary">
+                                                责任意识
+                                            </div>
+                                            <div class="bg-white px-4 py-2 rounded-full text-sm font-medium border border-primary text-primary">
+                                                规则意识
+                                            </div>
+                                            <div class="bg-white px-4 py-2 rounded-full text-sm font-medium border border-primary text-primary">
+                                                公共意识
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div>
+                                        <h5 class="font-semibold mb-2">建立安全信用体系</h5>
+                                        <div class="bg-white p-3 rounded border border-gray-200">
+                                            <p class="text-gray-700">驾驶电动自行车一年内有多次道路交通违法行为记录，经公安机关交通管理部门依法告知后逾期不接受处理的，由公安机关交通管理部门将相关驾驶人违法信息同征信体系挂钩，纳入本市公共信用信息管理系统的个人信用档案。</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-orange-50 p-5 rounded-lg">
+                                <h4 class="font-bold text-lg mb-3 text-primary flex items-center">
+                                    <i class="fa fa-money mr-2"></i>5.4.3 优化经济政策
+                                </h4>
+                                
+                                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                    <div class="bg-white p-4 rounded-lg border border-gray-200">
+                                        <h5 class="font-semibold mb-2 text-primary">经济激励政策</h5>
+                                        <ul class="list-disc pl-5 space-y-1 text-sm text-gray-700">
+                                            <li>以旧换新补贴</li>
+                                            <li>充电设施建设补贴</li>
+                                            <li>保险优惠政策</li>
+                                            <li>绿色出行奖励</li>
+                                        </ul>
+                                    </div>
+                                    
+                                    <div class="bg-white p-4 rounded-lg border border-gray-200">
+                                        <h5 class="font-semibold mb-2 text-primary">优化资源配置</h5>
+                                        <ul class="list-disc pl-5 space-y-1 text-sm text-gray-700">
+                                            <li>加大财政投入</li>
+                                            <li>优化土地资源配置</li>
+                                            <li>优化人力资源配置</li>
+                                            <li>优化技术资源配置</li>
+                                        </ul>
+                                    </div>
+                                    
+                                    <div class="bg-white p-4 rounded-lg border border-gray-200">
+                                        <h5 class="font-semibold mb-2 text-primary">市场化运作</h5>
+                                        <ul class="list-disc pl-5 space-y-1 text-sm text-gray-700">
+                                            <li>引入社会资本</li>
+                                            <li>专业化运营管理</li>
+                                            <li>服务购买机制</li>
+                                            <li>共享经济模式</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 六、不同主体的责任与实施路径 -->
+        <section id="responsibility" class="scroll-mt-24">
+            <div class="bg-white rounded-xl shadow-lg p-6 md:p-8 transition-transform duration-300 hover:shadow-xl">
+                <div class="flex items-center mb-6">
+                    <div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-white mr-4">
+                        <i class="fa fa-tasks"></i>
+                    </div>
+                    <h2 class="text-2xl md:text-3xl font-bold text-primary">六、不同主体的责任与实施路径</h2>
+                </div>
+                
+                <div class="mb-8">
+                    <h3 class="text-xl font-semibold mb-4 text-dark flex items-center">
+                        <span class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center mr-3 text-sm">6.1</span>
+                        政府部门的责任与实施路径
+                    </h3>
+                    
+                    <div class="border border-gray-200 rounded-lg overflow-hidden">
+                        <div class="bg-primary text-white p-4">
+                            <h4 class="font-bold text-lg">6.1.1 市级政府责任</h4>
+                        </div>
+                        <div class="p-5">
+                            <div class="mb-4">
+                                <h5 class="font-semibold mb-2">1. 制定政策规划</h5>
+                                <ul class="list-disc pl-5 space-y-2 text-gray-700">
+                                    <li>制定电动自行车管理法规和政策：修订完善相关法规，制定配套政策</li>
+                                    <li>编制专项规划：编制电动自行车停车设施、充电设施等专项规划</li>
+                                    <li>制定标准规范：制定电动自行车管理的标准和规范</li>
+                                    <li>建立协调机制：建立跨部门协调机制，统筹推进电动自行车管理工作</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="bg-blue-50 p-4 rounded-lg">
+                                <h5 class="font-semibold mb-2">建议实施路径：</h5>
+                                <ul class="list-disc pl-5 space-y-1 text-gray-700">
+                                    <li>成立由市政府领导牵头的电动自行车管理工作领导小组，统筹协调各部门工作</li>
+                                    <li>制定《电动自行车管理条例》，明确各部门职责和管理要求</li>
+                                    <li>将电动自行车管理纳入城市治理体系和治理能力现代化建设重要内容</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 责任主体实施路径总结 -->
+                <div class="bg-gray-50 p-6 rounded-lg border border-gray-200">
+                    <h3 class="text-xl font-semibold mb-4 text-dark">各主体责任与实施路径总结</h3>
+                    
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full bg-white border border-gray-200 rounded-lg">
+                            <thead>
+                                <tr class="bg-primary text-white">
+                                    <th class="py-3 px-4 text-left">责任主体</th>
+                                    <th class="py-3 px-4 text-left">主要责任</th>
+                                    <th class="py-3 px-4 text-left">实施路径</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-200">
+                                <tr>
+                                    <td class="py-3 px-4 font-medium">市级政府</td>
+                                    <td class="py-3 px-4">政策制定、规划编制、标准制定、协调统筹</td>
+                                    <td class="py-3 px-4">成立领导小组、制定管理条例、纳入城市治理体系</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-3 px-4 font-medium">区级政府</td>
+                                    <td class="py-3 px-4">政策落实、资源调配、监督检查、考核评估</td>
+                                    <td class="py-3 px-4">制定实施方案、建立考核机制、加强监督检查</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-3 px-4 font-medium">街道社区</td>
+                                    <td class="py-3 px-4">日常管理、宣传教育、矛盾调解、信息反馈</td>
+                                    <td class="py-3 px-4">建立管理队伍、开展宣传活动、建立反馈机制</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-3 px-4 font-medium">物业公司</td>
+                                    <td class="py-3 px-4">设施维护、秩序管理、安全巡查、违规劝阻</td>
+                                    <td class="py-3 px-4">完善设施建设、加强日常巡查、建立管理制度</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-3 px-4 font-medium">居民群众</td>
+                                    <td class="py-3 px-4">规范停放、安全充电、参与管理、监督举报</td>
+                                    <td class="py-3 px-4">遵守管理规定、参与社区治理、举报违规行为</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-3 px-4 font-medium">企业单位</td>
+                                    <td class="py-3 px-4">规范生产、诚信销售、员工管理、社会责任</td>
+                                    <td class="py-3 px-4">执行生产标准、建立管理制度、承担社会责任</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 页脚 -->
+    <footer class="bg-primary text-white py-8">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-4 md:mb-0">
+                    <h3 class="text-xl font-bold mb-2 flex items-center">
+                        <i class="fa fa-file-text-o mr-2"></i>城市电动自行车停放问题治理调研报告
+                    </h3>
+                    <p class="text-blue-200">基于广州市荔湾区及全国多个城市的实地调研</p>
+                </div>
+                
+                <div class="flex space-x-4">
+                    <a href="#intro" class="text-white hover:text-blue-200 transition-colors duration-200 flex items-center">
+                        <i class="fa fa-arrow-up mr-1"></i> 返回顶部
+                    </a>
+                    <a href="#" class="text-white hover:text-blue-200 transition-colors duration-200 flex items-center" id="printReport">
+                        <i class="fa fa-print mr-1"></i> 打印报告
+                    </a>
+                </div>
+            </div>
+            
+            <div class="mt-6 pt-6 border-t border-blue-700 text-center text-blue-200 text-sm">
+                <p>© 2025 城市治理研究中心 | 本报告仅供参考，具体实施请结合实际情况</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // 导航栏滚动效果
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('py-2', 'shadow-lg');
+                navbar.classList.remove('py-3', 'shadow-md');
+            } else {
+                navbar.classList.add('py-3', 'shadow-md');
+                navbar.classList.remove('py-2', 'shadow-lg');
+            }
+        });
+        
+        // 移动端菜单切换
+        document.getElementById('menuToggle').addEventListener('click', function() {
+            const mobileMenu = document.getElementById('mobileMenu');
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        // 研究方法选项卡切换
+        const methodTabs = document.querySelectorAll('.method-tab');
+        methodTabs.forEach(tab => {
+            tab.addEventListener('click', function() {
+                // 移除所有激活状态
+                methodTabs.forEach(t => {
+                    t.classList.remove('active', 'text-primary', 'border-b-2', 'border-primary');
+                    t.classList.add('text-gray-500');
+                });
+                
+                // 添加当前激活状态
+                this.classList.add('active', 'text-primary', 'border-b-2', 'border-primary');
+                this.classList.remove('text-gray-500');
+                
+                // 隐藏所有内容
+                document.querySelectorAll('.method-content').forEach(content => {
+                    content.classList.add('hidden');
+                    content.classList.remove('active');
+                });
+                
+                // 显示当前内容
+                const target = this.getAttribute('data-target');
+                document.getElementById(target).classList.remove('hidden');
+                document.getElementById(target).classList.add('active');
+            });
+        });
+        
+        // 痛点标签页切换
+        const painPointTabs = document.querySelectorAll('.pain-point-tab');
+        painPointTabs.forEach(tab => {
+            tab.addEventListener('click', function() {
+                // 移除所有激活状态
+                painPointTabs.forEach(t => {
+                    t.classList.remove('active', 'text-primary', 'border-b-2', 'border-primary');
+                    t.classList.add('text-gray-500');
+                });
+                
+                // 添加当前激活状态
+                this.classList.add('active', 'text-primary', 'border-b-2', 'border-primary');
+                this.classList.remove('text-gray-500');
+                
+                // 隐藏所有内容
+                document.querySelectorAll('.pain-point-content').forEach(content => {
+                    content.classList.add('hidden');
+                    content.classList.remove('active');
+                });
+                
+                // 显示当前内容
+                const target = this.getAttribute('data-target');
+                document.getElementById(target).classList.remove('hidden');
+                document.getElementById(target).classList.add('active');
+            });
+        });
+        
+        // 解决方案选项卡切换
+        const solutionTabs = document.querySelectorAll('.solution-tab');
+        solutionTabs.forEach(tab => {
+            tab.addEventListener('click', function() {
+                // 移除所有激活状态
+                solutionTabs.forEach(t => {
+                    t.classList.remove('active', 'text-primary', 'border-b-2', 'border-primary');
+                    t.classList.add('text-gray-500');
+                });
+                
+                // 添加当前激活状态
+                this.classList.add('active', 'text-primary', 'border-b-2', 'border-primary');
+                this.classList.remove('text-gray-500');
+                
+                // 隐藏所有内容
+                document.querySelectorAll('.solution-content').forEach(content => {
+                    content.classList.add('hidden');
+                    content.classList.remove('active');
+                });
+                
+                // 显示当前内容
+                const target = this.getAttribute('data-target');
+                document.getElementById(target).classList.remove('hidden');
+                document.getElementById(target).classList.add('active');
+            });
+        });
+        
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                    
+                    // 关闭移动端菜单
+                    document.getElementById('mobileMenu').classList.add('hidden');
+                }
+            });
+        });
+        
+        // 打印功能
+        document.getElementById('printReport').addEventListener('click', function(e) {
+            e.preventDefault();
+            window.print();
+        });
+        
+        // 图表初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            // 1. 电动自行车安全数据统计
+            const safetyCtx = document.getElementById('safetyChart').getContext('2d');
+            new Chart(safetyCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['全国电动自行车保有量(亿辆)', '2025年上半年火灾数(起)', '2025年4月火灾数(起)', '荔湾区人口密度(人/平方公里)'],
+                    datasets: [{
+                        label: '数据统计',
+                        data: [3.8, 7048, 368, 20953],
+                        backgroundColor: [
+                            'rgba(30, 64, 175, 0.7)',
+                            'rgba(239, 68, 68, 0.7)',
+                            'rgba(239, 68, 68, 0.9)',
+                            'rgba(59, 130, 246, 0.7)'
+                        ],
+                        borderColor: [
+                            'rgba(30, 64, 175, 1)',
+                            'rgba(239, 68, 68, 1)',
+                            'rgba(239, 68, 68, 1)',
+                            'rgba(59, 130, 246, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.dataset.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    if (context.parsed.y !== null) {
+                                        label += context.parsed.y.toLocaleString();
+                                    }
+                                    return label;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value) {
+                                    if (value >= 1000) {
+                                        return value / 1000 + 'k';
+                                    }
+                                    return value;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+            
+            // 2. 主要城市电动自行车保有量对比
+            const ownershipCtx = document.getElementById('ownershipChart').getContext('2d');
+            new Chart(ownershipCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['全国', '广州市', '北京市', '上海市', '深圳市'],
+                    datasets: [{
+                        label: '电动自行车保有量(万辆)',
+                        data: [38000, 500, 480, 450, 420],
+                        backgroundColor: 'rgba(30, 64, 175, 0.7)',
+                        borderColor: 'rgba(30, 64, 175, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.dataset.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    if (context.parsed.y !== null) {
+                                        label += context.parsed.y.toLocaleString() + ' 万辆';
+                                    }
+                                    return label;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value) {
+                                    if (value >= 1000) {
+                                        return value / 1000 + 'k';
+                                    }
+                                    return value;
+                                }
+                            },
+                            title: {
+                                display: true,
+                                text: '保有量(万辆)'
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: '城市'
+                            }
+                        }
+                    }
+                }
+            });
+            
+            // 3. 电动自行车停放问题原因权重分析
+            const reasonCtx = document.getElementById('reasonChart').getContext('2d');
+            new Chart(reasonCtx, {
+                type: 'radar',
+                data: {
+                    labels: [
+                        '规划设计滞后',
+                        '法律法规不完善',
+                        '管理机制不健全',
+                        '技术设施不足',
+                        '安全意识淡薄',
+                        '经济因素影响'
+                    ],
+                    datasets: [{
+                        label: '问题严重程度',
+                        data: [85, 78, 82, 90, 88, 72],
+                        fill: true,
+                        backgroundColor: 'rgba(30, 64, 175, 0.2)',
+                        borderColor: 'rgba(30, 64, 175, 1)',
+                        pointBackgroundColor: 'rgba(30, 64, 175, 1)',
+                        pointBorderColor: '#fff',
+                        pointHoverBackgroundColor: '#fff',
+                        pointHoverBorderColor: 'rgba(30, 64, 175, 1)'
+                    }]
+                },
+                options: {
+                    elements: {
+                        line: {
+                            borderWidth: 3
+                        }
+                    },
+                    scales: {
+                        r: {
+                            angleLines: {
+                                display: true
+                            },
+                            suggestedMin: 0,
+                            suggestedMax: 100
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
